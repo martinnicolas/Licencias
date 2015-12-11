@@ -5,6 +5,8 @@
  */
 package licencias;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -13,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -29,6 +32,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Licencia.findByLetra", query = "SELECT l FROM Licencia l WHERE l.letra = :letra"),
     @NamedQuery(name = "Licencia.findByDescripcion", query = "SELECT l FROM Licencia l WHERE l.descripcion = :descripcion")})
 public class Licencia implements Serializable {
+    @Transient
+    private PropertyChangeSupport changeSupport = new PropertyChangeSupport(this);
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -53,7 +58,9 @@ public class Licencia implements Serializable {
     }
 
     public void setIdLicencia(Integer idLicencia) {
+        Integer oldIdLicencia = this.idLicencia;
         this.idLicencia = idLicencia;
+        changeSupport.firePropertyChange("idLicencia", oldIdLicencia, idLicencia);
     }
 
     public String getNumero() {
@@ -61,7 +68,9 @@ public class Licencia implements Serializable {
     }
 
     public void setNumero(String numero) {
+        String oldNumero = this.numero;
         this.numero = numero;
+        changeSupport.firePropertyChange("numero", oldNumero, numero);
     }
 
     public String getLetra() {
@@ -69,7 +78,9 @@ public class Licencia implements Serializable {
     }
 
     public void setLetra(String letra) {
+        String oldLetra = this.letra;
         this.letra = letra;
+        changeSupport.firePropertyChange("letra", oldLetra, letra);
     }
 
     public String getDescripcion() {
@@ -77,7 +88,9 @@ public class Licencia implements Serializable {
     }
 
     public void setDescripcion(String descripcion) {
+        String oldDescripcion = this.descripcion;
         this.descripcion = descripcion;
+        changeSupport.firePropertyChange("descripcion", oldDescripcion, descripcion);
     }
 
     @Override
@@ -103,6 +116,14 @@ public class Licencia implements Serializable {
     @Override
     public String toString() {
         return "licencias.Licencia[ idLicencia=" + idLicencia + " ]";
+    }
+
+    public void addPropertyChangeListener(PropertyChangeListener listener) {
+        changeSupport.addPropertyChangeListener(listener);
+    }
+
+    public void removePropertyChangeListener(PropertyChangeListener listener) {
+        changeSupport.removePropertyChangeListener(listener);
     }
     
 }

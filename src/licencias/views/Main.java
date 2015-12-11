@@ -34,6 +34,13 @@ public class Main extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        LicenciasPUEntityManager = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("LicenciasPU").createEntityManager();
+        licenciaQuery = java.beans.Beans.isDesignTime() ? null : LicenciasPUEntityManager.createQuery("SELECT l FROM Licencia l");
+        licenciaList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : licenciaQuery.getResultList();
+        agenteQuery = java.beans.Beans.isDesignTime() ? null : LicenciasPUEntityManager.createQuery("SELECT a FROM Agente a");
+        agenteList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : agenteQuery.getResultList();
+        agenteQuery1 = java.beans.Beans.isDesignTime() ? null : LicenciasPUEntityManager.createQuery("SELECT a FROM Agente a");
+        agenteList1 = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : agenteQuery1.getResultList();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jMenuBar1 = new javax.swing.JMenuBar();
@@ -120,7 +127,7 @@ public class Main extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 781, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 778, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -128,7 +135,7 @@ public class Main extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(206, Short.MAX_VALUE))
+                .addContainerGap(142, Short.MAX_VALUE))
         );
 
         pack();
@@ -140,11 +147,18 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_menu_salirActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.persistence.EntityManager LicenciasPUEntityManager;
+    private java.util.List<licencias.Agente> agenteList;
+    private java.util.List<licencias.Agente> agenteList1;
+    private javax.persistence.Query agenteQuery;
+    private javax.persistence.Query agenteQuery1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
+    private java.util.List<licencias.Licencia> licenciaList;
+    private javax.persistence.Query licenciaQuery;
     private javax.swing.JMenuItem menu_agentes;
     private javax.swing.JMenuItem menu_licencias;
     private javax.swing.JMenuItem menu_salir;

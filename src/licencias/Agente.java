@@ -5,6 +5,8 @@
  */
 package licencias;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -16,6 +18,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -33,6 +36,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Agente.findByNombre", query = "SELECT a FROM Agente a WHERE a.nombre = :nombre"),
     @NamedQuery(name = "Agente.findByFechaIngreso", query = "SELECT a FROM Agente a WHERE a.fechaIngreso = :fechaIngreso")})
 public class Agente implements Serializable {
+    @Transient
+    private PropertyChangeSupport changeSupport = new PropertyChangeSupport(this);
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -60,7 +65,9 @@ public class Agente implements Serializable {
     }
 
     public void setIdAgente(Integer idAgente) {
+        Integer oldIdAgente = this.idAgente;
         this.idAgente = idAgente;
+        changeSupport.firePropertyChange("idAgente", oldIdAgente, idAgente);
     }
 
     public Integer getDni() {
@@ -68,7 +75,9 @@ public class Agente implements Serializable {
     }
 
     public void setDni(Integer dni) {
+        Integer oldDni = this.dni;
         this.dni = dni;
+        changeSupport.firePropertyChange("dni", oldDni, dni);
     }
 
     public String getApellido() {
@@ -76,7 +85,9 @@ public class Agente implements Serializable {
     }
 
     public void setApellido(String apellido) {
+        String oldApellido = this.apellido;
         this.apellido = apellido;
+        changeSupport.firePropertyChange("apellido", oldApellido, apellido);
     }
 
     public String getNombre() {
@@ -84,7 +95,9 @@ public class Agente implements Serializable {
     }
 
     public void setNombre(String nombre) {
+        String oldNombre = this.nombre;
         this.nombre = nombre;
+        changeSupport.firePropertyChange("nombre", oldNombre, nombre);
     }
 
     public Date getFechaIngreso() {
@@ -92,7 +105,9 @@ public class Agente implements Serializable {
     }
 
     public void setFechaIngreso(Date fechaIngreso) {
+        Date oldFechaIngreso = this.fechaIngreso;
         this.fechaIngreso = fechaIngreso;
+        changeSupport.firePropertyChange("fechaIngreso", oldFechaIngreso, fechaIngreso);
     }
 
     @Override
@@ -118,6 +133,14 @@ public class Agente implements Serializable {
     @Override
     public String toString() {
         return "licencias.Agente[ idAgente=" + idAgente + " ]";
+    }
+
+    public void addPropertyChangeListener(PropertyChangeListener listener) {
+        changeSupport.addPropertyChangeListener(listener);
+    }
+
+    public void removePropertyChangeListener(PropertyChangeListener listener) {
+        changeSupport.removePropertyChangeListener(listener);
     }
     
 }
