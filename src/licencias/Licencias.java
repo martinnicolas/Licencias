@@ -25,9 +25,8 @@ public class Licencias {
         try {            
             /*Defino la ventana como decorable, en caso de que quiera usar alguna decoracion*/
             JFrame.setDefaultLookAndFeelDecorated(true);
-            /*Defino la apariencia de la aplicaci?n (ver substance 5.0)*/
+            /*Defino la apariencia de la aplicacion */
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-            /*Creo el modelo, y le digo que cree la Ventana Principal de la Aplicaci?n*/
             // TODO code application logic here
             new Main().setVisible(true);
         } catch (ClassNotFoundException ex) {
