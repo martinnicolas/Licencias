@@ -6,6 +6,7 @@
 package licencias.views;
 
 import java.awt.BorderLayout;
+import java.awt.FlowLayout;
 
 /**
  *
@@ -13,8 +14,8 @@ import java.awt.BorderLayout;
  */
 public class Main extends javax.swing.JFrame {
 
-    private final AgentesJPanel panel_agentes = new AgentesJPanel();
-    private final LicenciasJPanel panel_licencias = new LicenciasJPanel();
+    private AgentesJPanel panel_agentes; 
+    private LicenciasJPanel panel_licencias; 
     
     /**
      * Creates new form Main
@@ -48,6 +49,8 @@ public class Main extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Licencias");
+        setMinimumSize(new java.awt.Dimension(1240, 760));
+        setPreferredSize(new java.awt.Dimension(1240, 760));
 
         menu_archivo.setText("Archivo");
 
@@ -88,17 +91,6 @@ public class Main extends javax.swing.JFrame {
 
         setJMenuBar(barra_menu);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 798, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 415, Short.MAX_VALUE)
-        );
-
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
@@ -110,13 +102,43 @@ public class Main extends javax.swing.JFrame {
 
     private void menu_agentesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_agentesActionPerformed
         // TODO add your handling code here:
-        
+        System.out.println("Entro al menu Agentes");
+        //Si ya está el otro Jpanel añadido al contenedor, entonces se elimina
+        try{
+        this.remove(panel_licencias);
+        }
+        catch(Exception e){
+        }
+
+        //Creamos una nueva instancia de panelHijoSuma
+        panel_agentes = new AgentesJPanel();
+
+        //Agregamos la instancia al JFrame, con un layout al centro
+        this.add(panel_agentes, BorderLayout.CENTER);
+
+        //Hacemos que el JFrame tenga el tamaño de todos sus elementos
+        this.pack();
+
     }//GEN-LAST:event_menu_agentesActionPerformed
 
     private void menu_licenciasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_licenciasActionPerformed
         // TODO add your handling code here:
-        getContentPane().add(panel_licencias,BorderLayout.CENTER);
-        validate();        
+        System.out.println("Entro al menu Licencias");
+        //Si ya está el otro Jpanel añadido al contenedor, entonces se elimina
+        try{
+        this.remove(panel_agentes);
+        }
+        catch(Exception e){
+        }
+
+        //Creamos una nueva instancia de panelHijoSuma
+        panel_licencias = new LicenciasJPanel();
+
+        //Agregamos la instancia al JFrame, con un layout al centro
+        this.add(panel_licencias, BorderLayout.CENTER);
+
+        //Hacemos que el JFrame tenga el tamaño de todos sus elementos
+        this.pack();
     }//GEN-LAST:event_menu_licenciasActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
