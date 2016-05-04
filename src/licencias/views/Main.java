@@ -5,12 +5,7 @@
  */
 package licencias.views;
 
-import java.util.List;
-import java.util.Vector;
-import javax.persistence.EntityManager;
-import javax.persistence.Persistence;
-import javax.persistence.Query;
-import licencias.Agente;
+import java.awt.BorderLayout;
 
 /**
  *
@@ -18,11 +13,14 @@ import licencias.Agente;
  */
 public class Main extends javax.swing.JFrame {
 
+    private final AgentesJPanel panel_agentes = new AgentesJPanel();
+    private final LicenciasJPanel panel_licencias = new LicenciasJPanel();
+    
     /**
      * Creates new form Main
      */
     public Main() {
-        initComponents();        
+        initComponents(); 
     }
 
     /**
@@ -35,110 +33,74 @@ public class Main extends javax.swing.JFrame {
     private void initComponents() {
 
         LicenciasPUEntityManager = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("LicenciasPU").createEntityManager();
-        licenciaQuery = java.beans.Beans.isDesignTime() ? null : LicenciasPUEntityManager.createQuery("SELECT l FROM Licencia l");
-        licenciaList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : licenciaQuery.getResultList();
         agenteQuery = java.beans.Beans.isDesignTime() ? null : LicenciasPUEntityManager.createQuery("SELECT a FROM Agente a");
         agenteList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : agenteQuery.getResultList();
-        agenteQuery1 = java.beans.Beans.isDesignTime() ? null : LicenciasPUEntityManager.createQuery("SELECT a FROM Agente a");
-        agenteList1 = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : agenteQuery1.getResultList();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
+        licenciaQuery = java.beans.Beans.isDesignTime() ? null : LicenciasPUEntityManager.createQuery("SELECT l FROM Licencia l");
+        licenciaList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : licenciaQuery.getResultList();
+        licenciaQuery1 = java.beans.Beans.isDesignTime() ? null : LicenciasPUEntityManager.createQuery("SELECT l FROM Licencia l");
+        licenciaList1 = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : licenciaQuery1.getResultList();
+        barra_menu = new javax.swing.JMenuBar();
+        menu_archivo = new javax.swing.JMenu();
         menu_agentes = new javax.swing.JMenuItem();
         menu_licencias = new javax.swing.JMenuItem();
         menu_salir = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
+        menu_acerca = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Licencias");
 
-        EntityManager entityManager = Persistence.createEntityManagerFactory("LicenciasPU").createEntityManager();
-        Query query = entityManager.createNamedQuery("Agente.findAll");
-        List<Agente> resultList = query.getResultList();
-
-        // data of the table
-        Vector<Vector<Object>> data = new Vector<Vector<Object>>();
-        for (Agente a : resultList)
-        {
-            Vector<Object> vector = new Vector<Object>();
-            vector.add(a.getDni());
-            vector.add(a.getApellido());
-            vector.add(a.getNombre());
-            vector.add(a.getFechaIngreso());
-            data.add(vector);
-        }
-
-        Vector<String> columnNames = new Vector<String>();
-
-        columnNames.add("DNI");
-        columnNames.add("Apellido");
-        columnNames.add("Nombre");
-        columnNames.add("Fecha de ingreso");
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            data,
-            columnNames
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, false, true, true
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jScrollPane1.setViewportView(jTable1);
-
-        jMenu1.setText("Archivo");
+        menu_archivo.setText("Archivo");
 
         menu_agentes.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.CTRL_MASK));
+        menu_agentes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/agentes.png"))); // NOI18N
         menu_agentes.setText("Agentes");
-        jMenu1.add(menu_agentes);
+        menu_agentes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menu_agentesActionPerformed(evt);
+            }
+        });
+        menu_archivo.add(menu_agentes);
 
         menu_licencias.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_L, java.awt.event.InputEvent.CTRL_MASK));
+        menu_licencias.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/licencias.png"))); // NOI18N
         menu_licencias.setText("Licencias");
-        jMenu1.add(menu_licencias);
+        menu_licencias.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menu_licenciasActionPerformed(evt);
+            }
+        });
+        menu_archivo.add(menu_licencias);
 
         menu_salir.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK));
+        menu_salir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/salir.png"))); // NOI18N
         menu_salir.setText("Salir");
         menu_salir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 menu_salirActionPerformed(evt);
             }
         });
-        jMenu1.add(menu_salir);
+        menu_archivo.add(menu_salir);
 
-        jMenuBar1.add(jMenu1);
+        barra_menu.add(menu_archivo);
 
-        jMenu2.setText("Acerca de");
-        jMenuBar1.add(jMenu2);
+        menu_acerca.setText("Acerca de");
+        barra_menu.add(menu_acerca);
 
-        setJMenuBar(jMenuBar1);
+        setJMenuBar(barra_menu);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 778, Short.MAX_VALUE)
-                .addContainerGap())
+            .addGap(0, 798, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(142, Short.MAX_VALUE))
+            .addGap(0, 415, Short.MAX_VALUE)
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void menu_salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_salirActionPerformed
@@ -146,20 +108,29 @@ public class Main extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_menu_salirActionPerformed
 
+    private void menu_agentesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_agentesActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_menu_agentesActionPerformed
+
+    private void menu_licenciasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_licenciasActionPerformed
+        // TODO add your handling code here:
+        getContentPane().add(panel_licencias,BorderLayout.CENTER);
+        validate();        
+    }//GEN-LAST:event_menu_licenciasActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.persistence.EntityManager LicenciasPUEntityManager;
     private java.util.List<licencias.Agente> agenteList;
-    private java.util.List<licencias.Agente> agenteList1;
     private javax.persistence.Query agenteQuery;
-    private javax.persistence.Query agenteQuery1;
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JMenuBar barra_menu;
     private java.util.List<licencias.Licencia> licenciaList;
+    private java.util.List<licencias.Licencia> licenciaList1;
     private javax.persistence.Query licenciaQuery;
+    private javax.persistence.Query licenciaQuery1;
+    private javax.swing.JMenu menu_acerca;
     private javax.swing.JMenuItem menu_agentes;
+    private javax.swing.JMenu menu_archivo;
     private javax.swing.JMenuItem menu_licencias;
     private javax.swing.JMenuItem menu_salir;
     // End of variables declaration//GEN-END:variables
