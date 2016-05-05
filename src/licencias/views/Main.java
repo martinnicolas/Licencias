@@ -105,20 +105,20 @@ public class Main extends javax.swing.JFrame {
         System.out.println("Entro al menu Agentes");
         //Si ya está el otro Jpanel añadido al contenedor, entonces se elimina
         try{
-        this.remove(panel_licencias);
+            this.remove(panel_licencias);
+            //Creamos una nueva instancia de panelHijoSuma
+            panel_agentes = new AgentesJPanel();
+            //Agregamos la instancia al JFrame, con un layout al centro
+            this.add(panel_agentes, BorderLayout.CENTER);
+            //Hacemos que el JFrame tenga el tamaño de todos sus elementos
+            this.validate();
         }
         catch(Exception e){
+            //Creamos una nueva instancia de panelHijoSuma
+            panel_agentes = new AgentesJPanel();
+            //Hacemos que el JFrame tenga el tamaño de todos sus elementos
+            this.validate();
         }
-
-        //Creamos una nueva instancia de panelHijoSuma
-        panel_agentes = new AgentesJPanel();
-
-        //Agregamos la instancia al JFrame, con un layout al centro
-        this.add(panel_agentes, BorderLayout.CENTER);
-
-        //Hacemos que el JFrame tenga el tamaño de todos sus elementos
-        this.pack();
-
     }//GEN-LAST:event_menu_agentesActionPerformed
 
     private void menu_licenciasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_licenciasActionPerformed
@@ -126,19 +126,20 @@ public class Main extends javax.swing.JFrame {
         System.out.println("Entro al menu Licencias");
         //Si ya está el otro Jpanel añadido al contenedor, entonces se elimina
         try{
-        this.remove(panel_agentes);
+            this.remove(panel_agentes);
+            //Creamos una nueva instancia de panelHijoSuma
+            panel_licencias = new LicenciasJPanel();
+            //Agregamos la instancia al JFrame, con un layout al centro
+            this.add(panel_licencias, BorderLayout.CENTER);
+            //Hacemos que el JFrame tenga el tamaño de todos sus elementos
+            this.validate();
         }
         catch(Exception e){
+            //Creamos una nueva instancia de panelHijoSuma
+            panel_licencias = new LicenciasJPanel();
+            //Hacemos que el JFrame tenga el tamaño de todos sus elementos
+            this.validate();
         }
-
-        //Creamos una nueva instancia de panelHijoSuma
-        panel_licencias = new LicenciasJPanel();
-
-        //Agregamos la instancia al JFrame, con un layout al centro
-        this.add(panel_licencias, BorderLayout.CENTER);
-
-        //Hacemos que el JFrame tenga el tamaño de todos sus elementos
-        this.pack();
     }//GEN-LAST:event_menu_licenciasActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
